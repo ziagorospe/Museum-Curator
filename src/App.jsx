@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div>
-      <h1>Museum Curator</h1>
+      <h1>Museum Curator MVP</h1>
       <Navbar />
       <MessageContext.Provider value={{responseMessage, setResponseMessage}}>
         <UserMessage />

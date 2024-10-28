@@ -16,7 +16,7 @@ function Artwork(props){
       if(Object.keys(focusArtwork).length>0){
         setResponseMessage("")
       }else{
-        setResponseMessage("Return to the search page") 
+        setResponseMessage("No artwork selected, you shouldn't be here") 
       }
            
     },[])
@@ -45,6 +45,6 @@ function Artwork(props){
                 </div>
             </div>
         </article>
-    </div>) : <>{isError}<Link to="/" ><p>Return Home</p></Link></>
+    </div>) : <Link to="/" ><p>Return Home</p></Link>
 }
 export default Artwork

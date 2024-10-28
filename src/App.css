@@ -3,6 +3,44 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  h1{
+    font-size: calc(20px + 3vw);
+  }
 }
 
+nav > *{
+  display:inline-block;
+  margin: 0 5px;
+  font-size: calc(12px + 1.5vw);
+}
 
+form > *{
+  margin: 5px 0;
+  font-size: calc(12px + 0.7vw);
+}
+
+.user-message{
+  font-size: calc(12px + 0.7vw);
+}
+
+article{
+  max-width:60%;
+  border:solid;
+  padding:5px;
+  margin: 20px auto;
+  h2{
+    font-size: calc(15px + 0.7vw);
+  }
+  h3{
+    font-size: calc(12px + 0.6vw);
+  }
+  h4{
+    font-size: calc(11px + 0.5vw);
+  }
+  h2, h3, h4{
+    margin:5px 0;
+  }
+  img{
+    max-width: 90%;
+  }
+}

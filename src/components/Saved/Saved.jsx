@@ -7,7 +7,6 @@ function Saved(){
     const {savedArtworks} = useContext(SavedArtworkContext)
     const {setSavedArtworks} = useContext(SavedArtworkContext)
     const [isLoading, setIsLoading] = useState(false)
-    const [isError, setIsError] = useState()
     const {setResponseMessage} = useContext(MessageContext)
     const savedList = [...savedArtworks]
 
@@ -21,7 +20,7 @@ function Saved(){
     }, [])
 
     return (<>
-        {isLoading ? <p>Loading...</p> : ( !isError ? <ArtworkList artworkList={savedList} setArtworkList={setSavedArtworks} sender={'saved'}/> : <>{isError}<a href="" onClick={reRender}>Something went wrong</a></>)}
+        {isLoading ? <p>Loading...</p> : <ArtworkList artworkList={savedList} setArtworkList={setSavedArtworks} sender={'saved'}/>}
     </>)
 }
 
