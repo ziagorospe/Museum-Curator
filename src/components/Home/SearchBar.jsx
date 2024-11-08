@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import MessageContext from "../../contexts/Message";
 import SearchListContext from "../../contexts/SearchList";
 
 function SearchBar(props){
-  const [currentSort, setCurrentSort] = useState('')
+  const [currentSort, setCurrentSort] = useState('relevance')
   const [searchText, setSearchText] = useState('')
   const {setResponseMessage} = useContext(MessageContext)
   const {searchList} = useContext(SearchListContext)
   const {setSearchList} = useContext(SearchListContext)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const {artworkList} = props
   const {setArtworkList} = props
   const {isLoading} = props
   const {setIsLoading} = props
@@ -21,6 +23,9 @@ function SearchBar(props){
   useEffect(()=>{
     setIsError(false)
     setCurrentMuseum('europeana')
+    if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && artworkList.length == 0){
+      queryAdvanced("qexists")
+    }
   },[])
 
   function changeSort(event){
@@ -32,19 +37,37 @@ function SearchBar(props){
   }
 
   function queryAdvanced(event){
-    event.preventDefault();
+    let searchTextQ = "";
+    let currentMuseumQ = "";
+    let currentSortQ = "";
+    if(event == "qexists"){
+      currentSortQ = searchParams.get("sort")
+      currentMuseumQ = searchParams.get("museum")
+      searchTextQ = searchParams.get("searchtext")
+    }
+    else{
+      event.preventDefault();
+      currentSortQ = currentSort
+      currentMuseumQ = currentMuseum
+      searchTextQ = searchText
+      let tempStr = searchTextQ
+      setSearchParams({'museum': currentMuseum, 'sort': currentSort, 'searchtext': tempStr.replace(/\s+/g, '+')})
+    }
+    
     setResponseMessage("")
     setIsLoading(true)
     const collectionArray = []
     let museumQuery = "";
-    if(!searchText){
-      setIsError()
-    } else if(currentMuseum=='artic'){
+    if(!searchTextQ){
+      setIsError(true)
+      setResponseMessage("Need to enter Search Text")
+      setIsLoading(false)
+    } else if(currentMuseumQ=='artic'){
       // for smithsonian (couldnt get media in the api call -need to email api dept about it) museumQuery = 'https://api.si.edu/openaccess/api/v1.0/search?api_key=8jZLzIzZG619jAraEq2a8qy0xbdfH7jsgfCZ9jzH' + '&q=' + searchText + '&media=true'
       
-      let str = searchText
-      setSearchText(str.replace(/\s+/g, '+'))
-      museumQuery = 'https://api.artic.edu/api/v1/artworks/search?q=' + searchText + '&fields=id,title,artist_title,thumbnail,api_link,gallery_title,image_id&limit=20'
+      let str = searchTextQ
+      searchTextQ = str.replace(/\s+/g, '+')
+      museumQuery = 'https://api.artic.edu/api/v1/artworks/search?q=' + searchTextQ + '&fields=id,title,artist_title,thumbnail,api_link,gallery_title,image_id&limit=100'
       axios.get(museumQuery)
       .then((response)=>{
         setIsLoading(false)
@@ -68,7 +91,7 @@ function SearchBar(props){
           collectionArray.push(tempObj)
         })
       }).then(()=>{
-        switch(currentSort){
+        switch(currentSortQ){
           case 'relevance':
             break;
           case 'title':
@@ -86,10 +109,10 @@ function SearchBar(props){
         }
       })
       
-    } else if (currentMuseum=='europeana'){
-      let str = searchText
-      setSearchText(str.replace(/\s+/g, '+'))
-      museumQuery = 'https://api.europeana.eu/record/v2/search.json?wskey=steeductona' + '&query=' + searchText + '&type=object&rows=20'
+    } else if (currentMuseumQ=='europeana'){
+      let str = searchTextQ
+      searchTextQ = str.replace(/\s+/g, '+')
+      museumQuery = 'https://api.europeana.eu/record/v2/search.json?wskey=steeductona' + '&query=' + searchTextQ + '&type=object&rows=100'
 
       axios.get(museumQuery)
       .then((response)=>{
@@ -129,7 +152,7 @@ function SearchBar(props){
           collectionArray.push(tempObj)
         })
       }).then(()=>{
-        switch(currentSort){
+        switch(currentSortQ){
           case 'relevance':
             break;
           case 'title':

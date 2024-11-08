@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import ArtworkList from "../Artworks/ArtworkList";
 import SearchBar from "./SearchBar";
 import MessageContext from "../../contexts/Message";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import SearchListContext from "../../contexts/SearchList";
 
 function Home(){
@@ -15,6 +15,7 @@ function Home(){
   
   useEffect(()=>{
       setIsLoading(true)
+      
       if(searchList.length>0){
         setArtworkList([...searchList])
         setIsLoading(false)
@@ -26,8 +27,8 @@ function Home(){
   }, [])
   
   return (<>
-      <SearchBar currentMuseum={currentMuseum} setCurrentMuseum={setCurrentMuseum} isError={isError} setIsError={setIsError} isLoading={isLoading} setIsLoading={setIsLoading} setArtworkList={setArtworkList}/>
-      {isLoading ? <p>Loading...</p> : ( !isError ? <ArtworkList artworkList={artworkList} setArtworkList={setArtworkList} sender={'home'}/> : <>{isError}<Link to="/" ><p>Something went wrong</p></Link></>)}
+      <SearchBar currentMuseum={currentMuseum} setCurrentMuseum={setCurrentMuseum} isError={isError} setIsError={setIsError} isLoading={isLoading} setIsLoading={setIsLoading} artworkList={artworkList} setArtworkList={setArtworkList}/>
+      {isLoading ? <p>Loading...</p> : ( !isError ? <ArtworkList artworkList={artworkList} setArtworkList={setArtworkList} sender={'home'}/> : <>{isError}<p>Invalid Search</p></>)}
   </>)
 
 }
