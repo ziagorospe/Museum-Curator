@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import MessageContext from "../../contexts/Message";
 import SearchListContext from "../../contexts/SearchList";
+import PreviousSearchContext from '../../contexts/PreviousSearch';
 
 function SearchBar(props){
   const [currentSort, setCurrentSort] = useState('relevance')
@@ -10,6 +11,8 @@ function SearchBar(props){
   const {setResponseMessage} = useContext(MessageContext)
   const {searchList} = useContext(SearchListContext)
   const {setSearchList} = useContext(SearchListContext)
+  const {previousSearch} = useContext(PreviousSearchContext)
+  const {setPreviousSearch} = useContext(PreviousSearchContext)
   const [searchParams, setSearchParams] = useSearchParams();
   const {artworkList} = props
   const {setArtworkList} = props
@@ -25,6 +28,8 @@ function SearchBar(props){
     setCurrentMuseum('europeana')
     if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && artworkList.length == 0){
       queryAdvanced("qexists")
+    } else if (searchList.length > 0){
+      setSearchParams({...previousSearch})
     }
   },[])
 
@@ -73,6 +78,7 @@ function SearchBar(props){
         setIsLoading(false)
         setIsError(false)
         setResponseMessage("hint: including keywords like painting or sculpture can help a lot")
+        setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
         response.data.data.forEach((element)=>{
           const tempObj = {}
           tempObj.title = element.title
@@ -119,6 +125,7 @@ function SearchBar(props){
         setIsLoading(false)
         setIsError(false)
         setResponseMessage("hint: including keywords like painting or sculpture can help a lot")
+        setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
         response.data.items.forEach((element)=>{
           const tempObj = {}
           if(element.dcTitleLangAware.en){

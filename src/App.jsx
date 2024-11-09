@@ -11,12 +11,14 @@ import UserMessage from "./components/UserMessage/UserMessage";
 import SavedArtworkContext from './contexts/SavedArtwork';
 import SearchListContext from './contexts/SearchList';
 import FocusArtworkContext from './contexts/FocusArtwork';
+import PreviousSearchContext from './contexts/PreviousSearch';
 
 function App() {
 
   const [searchList, setSearchList] = useState([])
   const [savedArtworks, setSavedArtworks] = useState([])
   const [focusArtwork, setFocusArtwork] = useState({})
+  const [previousSearch, setPreviousSearch] = useState({'museum': '', 'sort': '', 'relevance': ''})
   const [responseMessage, setResponseMessage] = useState("")
   const location = useLocation();
 
@@ -33,6 +35,7 @@ function App() {
         <SearchListContext.Provider value={{searchList, setSearchList}}>
         <SavedArtworkContext.Provider value={{savedArtworks, setSavedArtworks}}>
         <FocusArtworkContext.Provider value={{focusArtwork, setFocusArtwork}}>
+        <PreviousSearchContext.Provider value={{previousSearch, setPreviousSearch}}>
           <Routes>
           
             <Route path="/" element={
@@ -48,6 +51,7 @@ function App() {
               <NotFoundPage/>
             }/>
           </Routes>
+        </PreviousSearchContext.Provider>
         </FocusArtworkContext.Provider>
         </SavedArtworkContext.Provider>
         </SearchListContext.Provider>

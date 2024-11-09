@@ -43,6 +43,16 @@ function ArtworkList(props){
     return <div>
         {
             artworkList.map((artwork, index)=>{
+                let existsInSaved = false;
+                if (sender=="home"){
+                    if (savedArtworks.length>0){
+                        savedArtworks.forEach((element)=>{
+                            if (artwork.id == element.id){
+                                existsInSaved = true;
+                            }
+                        })
+                    }
+                }
                 return (
                 <article key={index}>
                     <div className='artwork-img-container'>
@@ -60,7 +70,7 @@ function ArtworkList(props){
 
                         </div>
                     </div>
-                    {(sender=="home") ? <button onClick={()=>addToSavedCollection(artwork)}>Save to Collection</button> : <button onClick={()=>removeFromSavedCollection(artwork, index)}>Remove From Collection</button>}
+                    {(sender=="home") ? <button onClick={()=>addToSavedCollection(artwork)} disabled={existsInSaved}>Save to Collection</button> : <button onClick={()=>removeFromSavedCollection(artwork, index)}>Remove From Collection</button>}
                 </article>)
             })
         }
