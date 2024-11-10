@@ -25,8 +25,8 @@ function SearchBar(props){
 
   useEffect(()=>{
     setIsError(false)
-    setCurrentMuseum('europeana')
-    if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && artworkList.length == 0){
+    //setCurrentMuseum('europeana')
+    if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && searchList.length == 0){
       queryAdvanced("qexists")
     } else if (searchList.length > 0){
       setSearchParams({...previousSearch})
@@ -55,8 +55,6 @@ function SearchBar(props){
       currentSortQ = currentSort
       currentMuseumQ = currentMuseum
       searchTextQ = searchText
-      let tempStr = searchTextQ
-      setSearchParams({'museum': currentMuseum, 'sort': currentSort, 'searchtext': tempStr.replace(/\s+/g, '+')})
     }
     
     setResponseMessage("")
@@ -107,18 +105,22 @@ function SearchBar(props){
             collectionArray.sort((a,b)=>a.author.localeCompare(b.author))
             break;
         }
+        setSearchParams({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
         setSearchList(collectionArray)
         setArtworkList(collectionArray)
       }).catch((err)=>{
         if(err){
           setIsError(true)
+          setIsLoading(false)
+          const tempSearchParams = new URLSearchParams()
+          setSearchParams(tempSearchParams)
         }
       })
       
     } else if (currentMuseumQ=='europeana'){
       let str = searchTextQ
       searchTextQ = str.replace(/\s+/g, '+')
-      museumQuery = 'https://api.europeana.eu/record/v2/search.json?wskey=steeductona' + '&query=' + searchTextQ + '&type=object&rows=100'
+      museumQuery = 'https://api.europeana.eu/record/v2/search.json?wskey=steeductona' + '&query=' + searchTextQ + '&type=object&rows=100&media=true'
 
       axios.get(museumQuery)
       .then((response)=>{
@@ -169,12 +171,16 @@ function SearchBar(props){
             collectionArray.sort((a,b)=>a.author.localeCompare(b.author))
             break;
         }
+        setSearchParams({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
         setSearchList(collectionArray)
         setArtworkList(collectionArray)
       })
       .catch((err)=>{
         if(err){
           setIsError(true)
+          setIsLoading(false)
+          const tempSearchParams = new URLSearchParams()
+          setSearchParams(tempSearchParams)
         }
       })
     }

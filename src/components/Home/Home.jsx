@@ -8,7 +8,7 @@ import SearchListContext from "../../contexts/SearchList";
 function Home(){
   const [artworkList, setArtworkList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [currentMuseum, setCurrentMuseum] = useState("")
+  const [currentMuseum, setCurrentMuseum] = useState("europeana")
   const [isError, setIsError] = useState()
   const {setResponseMessage} = useContext(MessageContext)
   const {searchList} = useContext(SearchListContext)
