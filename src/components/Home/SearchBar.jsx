@@ -77,7 +77,7 @@ function SearchBar(props){
       .then((response)=>{
         setIsLoading(false)
         setIsError(false)
-        setResponseMessage("hint: including keywords like painting or sculpture can help a lot")
+        setResponseMessage("hint: try including keywords like 'painting' or 'sculpture'")
         setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
         response.data.data.forEach((element)=>{
           const tempObj = {}
@@ -128,7 +128,7 @@ function SearchBar(props){
       .then((response)=>{
         setIsLoading(false)
         setIsError(false)
-        setResponseMessage("hint: including keywords like painting or sculpture can help a lot")
+        setResponseMessage("hint: try including keywords like 'painting' or 'sculpture'")
         setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
         response.data.items.forEach((element)=>{
           const tempObj = {}

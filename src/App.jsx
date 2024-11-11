@@ -12,6 +12,7 @@ import SavedArtworkContext from './contexts/SavedArtwork';
 import SearchListContext from './contexts/SearchList';
 import FocusArtworkContext from './contexts/FocusArtwork';
 import PreviousSearchContext from './contexts/PreviousSearch';
+import museumlogo from '../public/museum-curator-logo.png'
 
 function App() {
 
@@ -28,8 +29,11 @@ function App() {
 
   return (
     <div>
-      <h1>Museum Curator MVP</h1>
-      <h2>WARNING: Refreshing the site will wipe your current collection</h2>
+      <div className='marquee'>
+        <p><span id="warning">WARNING:</span> Refreshing the site will wipe your Saved Collection. Please maintain your session to keep progress.</p>
+      </div>
+      <img id="main-logo" src={museumlogo} alt="Museum Curator MVP"/>
+      
       <Navbar />
       <MessageContext.Provider value={{responseMessage, setResponseMessage}}>
         <UserMessage />

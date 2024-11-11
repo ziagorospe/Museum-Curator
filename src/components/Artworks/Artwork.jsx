@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import FocusArtworkContext from "../../contexts/FocusArtwork"
 import MessageContext from "../../contexts/Message"
 import SearchListContext from "../../contexts/SearchList";
+import NotFoundPage from '../NotFound/NotFoundPage'
 
 
 function Artwork(props){
@@ -29,11 +30,7 @@ function Artwork(props){
             existingQuery += 'https://api.artic.edu/api/v1/artworks/' + id 
         } else if (museum=='europeana'){
             existingQuery += 'https://api.europeana.eu/record/v2/' + id + '.json?wskey=steeductona'
-        } else {
-            navigate("*")
-            //go to 404
-            //set user message, invalid museum
-        }
+        } 
         setIsLoading(true)
         const tempObj = {}
         tempObj.id = id
@@ -149,7 +146,7 @@ function Artwork(props){
             setIsError(true)
         })
       } else{
-        setResponseMessage("No artwork selected, you shouldn't be here") 
+        setResponseMessage("The Artwork you are trying to find does not exist, you shouldn't be here") 
       }
       
       setIsLoading(false)
@@ -180,6 +177,6 @@ function Artwork(props){
                 </div>
             </div>
         </article>
-    </div>) : <Link to="/" ><p>Return Home</p></Link>
+    </div>) : <NotFoundPage/>
 }
 export default Artwork
