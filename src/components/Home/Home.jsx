@@ -28,7 +28,7 @@ function Home(){
   
   return (<>
       <SearchBar currentMuseum={currentMuseum} setCurrentMuseum={setCurrentMuseum} isError={isError} setIsError={setIsError} isLoading={isLoading} setIsLoading={setIsLoading} artworkList={artworkList} setArtworkList={setArtworkList}/>
-      {isLoading ? <p>Loading...</p> : ( !isError ? <ArtworkList artworkList={artworkList} setArtworkList={setArtworkList} sender={'home'}/> : <>{isError}<p>Invalid Search</p></>)}
+      {isLoading ? <p>Loading...</p> : ( !isError ? <ArtworkList currentMuseum={currentMuseum} artworkList={artworkList} setArtworkList={setArtworkList} sender={'home'}/> : <>{isError}<p>Invalid Search</p></>)}
   </>)
 
 }

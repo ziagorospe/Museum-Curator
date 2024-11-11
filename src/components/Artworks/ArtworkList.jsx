@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import SavedArtworkContext from "../../contexts/SavedArtwork";
 import MessageContext from "../../contexts/Message";
 import FocusArtworkContext from '../../contexts/FocusArtwork';
@@ -9,11 +9,15 @@ function ArtworkList(props){
     const {setSavedArtworks} = useContext(SavedArtworkContext)
     const {setResponseMessage} = useContext(MessageContext)
     const {setFocusArtwork} = useContext(FocusArtworkContext)
+    const [searchParams, setSearchParams] = useSearchParams();
+    const {currentMuseum} = props
     const {artworkList} = props
     const {sender} = props
 
     function setSelectedArtwork(artwork){
         setFocusArtwork(artwork)
+        const tempSearchParams = new URLSearchParams({'museum': currentMuseum, 'id': artwork.id})
+        setSearchParams(tempSearchParams)
     }
 
     function addToSavedCollection(artwork){
@@ -60,12 +64,12 @@ function ArtworkList(props){
                     </div>
                     
                     <div className='artwork-info'>
-                        <Link to={`/artwork/${artwork.id}`} onClick={()=>{setSelectedArtwork(artwork)}}>
+                        <Link to={`/artwork/?id=${artwork.id}&museum=${currentMuseum}`} onClick={()=>{setSelectedArtwork(artwork)}}>
                             <h2>{artwork.title}</h2>
                         </Link>
                         <div className='artwork-text-info'>
                             <h3>By: {artwork.author ? artwork.author : "Unknown"}</h3>
-                            <h4>Country: {artwork.country}</h4>
+                            <h4>Location: {artwork.country}</h4>
                             <h4>Curated by: {artwork.museum}</h4>
 
                         </div>

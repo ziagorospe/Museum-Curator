@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import SavedArtworkContext from "../../contexts/SavedArtwork";
 import MessageContext from "../../contexts/Message";
 import ArtworkList from "../Artworks/ArtworkList";
+import { useNavigate } from 'react-router-dom';
 
 function Saved(){
     const {savedArtworks} = useContext(SavedArtworkContext)

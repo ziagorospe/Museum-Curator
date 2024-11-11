@@ -24,10 +24,13 @@ function SearchBar(props){
   const {setIsError} = props
 
   useEffect(()=>{
+    if(searchParams.get("id") && searchList.length == 0){
+      setSearchParams()
+    }
     setIsError(false)
-    //setCurrentMuseum('europeana')
     if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && searchList.length == 0){
       queryAdvanced("qexists")
+      setCurrentMuseum(searchParams.get("museum"))
     } else if (searchList.length > 0){
       setSearchParams({...previousSearch})
     }
@@ -42,6 +45,8 @@ function SearchBar(props){
   }
 
   function queryAdvanced(event){
+    setIsLoading(true)
+    setResponseMessage("")
     let searchTextQ = "";
     let currentMuseumQ = "";
     let currentSortQ = "";
@@ -56,9 +61,6 @@ function SearchBar(props){
       currentMuseumQ = currentMuseum
       searchTextQ = searchText
     }
-    
-    setResponseMessage("")
-    setIsLoading(true)
     const collectionArray = []
     let museumQuery = "";
     if(!searchTextQ){
@@ -148,7 +150,8 @@ function SearchBar(props){
           
           tempObj.country = element.country[0]
           tempObj.museum = element.dataProvider[0]
-          tempObj.id = element.edmDatasetName[0]
+          tempObj.id = element.id.slice(1).replace(/\//g, '%2F') //what a nightmare, why does europeana put slashes in their object ids????
+          //tempObj.id = element.edmDatasetName[0] might need this later
           if(element.dcDescriptionLangAware&&element.dcDescriptionLangAware.en){
             tempObj.info = element.dcDescriptionLangAware.en[0]
           }else if(element.dcDescription){
