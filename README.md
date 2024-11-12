@@ -8,7 +8,7 @@ This site was designed to simulate the streamlined experience of a digital museu
 ## Instructions:
 ### WARNING:
  Do Not Refresh the Site under ANY circumstances (unless you want to start all over) as you will lose your current collection.
-<br/>
+<br/> This site has no dedicated backend at this stage of development and is running the saved collection entirely on react state hooks. The saved collection will only last for your current session.
 
 ### There are 5 main actions a user can undertake on this site:
 
