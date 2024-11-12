@@ -160,7 +160,7 @@ function Artwork(props){
         navigate(-1)
     }
 
-    return isLoading ? <p>Loading...</p> : Object.keys(focusArtwork).length>0 ? (
+    return isLoading ? <p className='loading-message'>Loading...</p> : Object.keys(focusArtwork).length>0 ? (
     <div className="artwork-page">
         {(searchList.length>0) ? <button onClick={goBack}>Back</button> : <></>}
         <article>

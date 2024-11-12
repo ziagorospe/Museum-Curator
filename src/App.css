@@ -120,6 +120,28 @@ button:active{
   margin:10px auto;
   color: #000000;
   font-weight: bold;
+  @media screen and (max-width: 900px){
+    max-width: 80%;
+  }
+}
+
+.saved-header{
+  background-color: #90a5de;
+  outline: 10px solid rgb(108, 19, 86);
+  border: 5px solid #361640;
+  display:flex;
+  flex-direction: column;
+  padding: 10px;
+  max-width: 40%;
+  margin:10px auto;
+  color: #000000;
+  font-weight: bold;
+  p{
+    margin-top:0px;
+  }
+  @media screen and (max-width: 900px){
+    max-width: 80%;
+  }
 }
 
 article{
@@ -143,4 +165,17 @@ article{
   img{
     max-width: 90%;
   }
+
+  @media screen and (max-width: 900px){
+    max-width: 80%;
+  }
+}
+
+.loading-message{
+  color:white;
+}
+
+.error-message{
+  color:red;
+  padding-top:20px;
 }

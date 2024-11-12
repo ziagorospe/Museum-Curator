@@ -13,12 +13,16 @@ article img {
 article{
     a{
        text-decoration-color: #8c327e; 
+       text-decoration: none;
     }
     a:hover{
+        text-decoration: underline;
         text-decoration-color: #2f044e;
+        
     }
     h2, h2:visited, h2:active{
         color: #8c327e;
+        
         
     }
     h2:hover{

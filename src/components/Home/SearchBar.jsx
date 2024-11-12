@@ -29,10 +29,22 @@ function SearchBar(props){
     }
     setIsError(false)
     if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && searchList.length == 0){
-      queryAdvanced("qexists")
-      setCurrentMuseum(searchParams.get("museum"))
+      const tempSort = searchParams.get("sort")
+      if(tempSort == 'relevance' || tempSort == 'title' || tempSort == 'artist'){
+        queryAdvanced("qexists")
+        setCurrentMuseum(searchParams.get("museum"))
+      } else {
+        setIsError(true)
+        setResponseMessage("Can't sort by whatever that is in the search bar pal")
+      }
+      
     } else if (searchList.length > 0){
       setSearchParams({...previousSearch})
+    } else if (!searchParams.get("museum") && !searchParams.get("searchtext") && !searchParams.get("sort")){
+      setResponseMessage("waiting for search")
+    } else {
+      setIsError(true)
+      setResponseMessage("Something weird is going on in the search bar")
     }
   },[])
 
@@ -197,8 +209,8 @@ function SearchBar(props){
         <div className="museum-select-div">
           <label htmlFor="select-museum">Pick a museum:</label>
           <select id="select-museum" value={currentMuseum} onChange={changeMuseum} name="museum">
-            <option value="europeana">Europeana</option>
             <option value="artic">Art Institute of Chicago</option>
+            <option value="europeana">Europeana</option>
           </select>
         </div>
         <div className="search-text-div">
@@ -219,7 +231,7 @@ function SearchBar(props){
         </select>
       </div>
         <div className="search-button-div">
-          <input className="btn" type="submit" />
+          <input className="btn" type="submit" value="Search!"/>
         </div>
       </form>
     </div>

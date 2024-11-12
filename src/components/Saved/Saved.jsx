@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import SavedArtworkContext from "../../contexts/SavedArtwork";
 import MessageContext from "../../contexts/Message";
 import ArtworkList from "../Artworks/ArtworkList";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Saved(){
     const {savedArtworks} = useContext(SavedArtworkContext)
@@ -21,7 +21,14 @@ function Saved(){
     }, [])
 
     return (<div className='saved'>
-        {isLoading ? <p>Loading...</p> : <ArtworkList artworkList={savedList} setArtworkList={setSavedArtworks} sender={'saved'}/>}
+        <div className='saved-header'>
+            <h2>Your Collection</h2>
+            <p>{savedList.length} Item{savedList.length == 1 ? "" : "s"}</p>
+        </div>
+        
+        {isLoading ? <p className='loading-message'>Loading...</p> : 
+            <ArtworkList artworkList={savedList} setArtworkList={setSavedArtworks} sender={'saved'}/>}
+        {savedList.length == 0 && <Link to="/">Go find Something</Link>}
     </div>)
 }
 

@@ -8,7 +8,7 @@ import SearchListContext from "../../contexts/SearchList";
 function Home(){
   const [artworkList, setArtworkList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [currentMuseum, setCurrentMuseum] = useState("europeana")
+  const [currentMuseum, setCurrentMuseum] = useState("artic")
   const [isError, setIsError] = useState()
   const {setResponseMessage} = useContext(MessageContext)
   const {searchList} = useContext(SearchListContext)
@@ -21,14 +21,13 @@ function Home(){
         setIsLoading(false)
         setResponseMessage("Submit keywords for a new search")
       } else {
-        setResponseMessage("waiting for search")
         setIsLoading(false)
       }
   }, [])
   
   return (<div className="home">
       <SearchBar currentMuseum={currentMuseum} setCurrentMuseum={setCurrentMuseum} isError={isError} setIsError={setIsError} isLoading={isLoading} setIsLoading={setIsLoading} artworkList={artworkList} setArtworkList={setArtworkList}/>
-      {isLoading ? <p>Loading...</p> : ( !isError ? <ArtworkList currentMuseum={currentMuseum} artworkList={artworkList} setArtworkList={setArtworkList} sender={'home'}/> : <>{isError}<p>Invalid Search</p></>)}
+      {isLoading ? <p className='loading-message'>Loading...</p> : ( !isError ? <ArtworkList currentMuseum={currentMuseum} artworkList={artworkList} setArtworkList={setArtworkList} sender={'home'}/> : <>{isError}<p className="error-message">Invalid Search</p></>)}
   </div>)
 
 }
