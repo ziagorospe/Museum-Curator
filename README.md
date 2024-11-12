@@ -39,5 +39,5 @@ Europeana API (Impressive and one of the largest collections of museums and thei
 - run 'npm run dev' to run the project locally on your machine
 
 ## Requirements: 
-You will need the latest version of node js (Node.js v22.2.0) to run this project reliably.
+You will need the latest version of node js (Node.js v22.2.0) to run this project reliably.<br/>
 You will also need a screen size of at least 450 pixels in width.
