@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import SavedArtworkContext from "../../contexts/SavedArtwork";
 import MessageContext from "../../contexts/Message";
 import FocusArtworkContext from '../../contexts/FocusArtwork';
+import './Artwork.css'
 
 function ArtworkList(props){
     const {savedArtworks} = useContext(SavedArtworkContext)

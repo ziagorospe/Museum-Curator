@@ -9,6 +9,11 @@
   color:#715846;  
 }
 
+.body{
+  background-color: #000000;
+  padding-bottom: 40px;
+}
+
 a, a:visited, a:active{
   color:#de8e49;
 }
@@ -57,14 +62,29 @@ nav > *{
   font-size: calc(12px + 0.5vw);
 }
 
-.home{
+.home, .saved, .artwork-page{
   background-color: #191b14;
+  padding: 10px 0;
+  width:80%;
+  margin: 20px auto;
+  outline: 10px solid #361640;
+  border: 5px solid #90a5de;
 }
+
 
 form > *{
   margin: 5px 0;
-  font-size: calc(12px + 0.7vw);
+  font-size: 18px;
 }
+
+button:active{
+  transform: translateY(2px);
+}
+
+.btn:active{
+  transform: translateY(2px);
+}
+
 .not-found-page{
   display:flex;
   flex-direction: column;
@@ -89,11 +109,25 @@ form > *{
   }
 }
 
+.search-bar{
+  background-color: #90a5de;
+  outline: 10px solid rgb(108, 19, 86);
+  border: 5px solid #361640;
+  display:flex;
+  flex-direction: column;
+  padding: 10px;
+  max-width: 40%;
+  margin:10px auto;
+  color: #000000;
+  font-weight: bold;
+}
+
 article{
-  max-width:60%;
-  border:solid;
-  padding:5px;
-  margin: 20px auto;
+  display:flex;
+  flex-direction: column;
+  max-width:50%;
+  padding:25px;
+  margin: 40px auto;
   h2{
     font-size: calc(15px + 0.7vw);
   }

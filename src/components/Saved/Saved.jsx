@@ -20,9 +20,9 @@ function Saved(){
         
     }, [])
 
-    return (<>
+    return (<div className='saved'>
         {isLoading ? <p>Loading...</p> : <ArtworkList artworkList={savedList} setArtworkList={setSavedArtworks} sender={'saved'}/>}
-    </>)
+    </div>)
 }
 
 export default Saved

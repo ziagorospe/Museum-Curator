@@ -28,7 +28,7 @@ function App() {
   },[location])
 
   return (
-    <div>
+    <div className='body'>
       <div className='marquee'>
         <p><span id="warning">WARNING:</span> Refreshing the site will wipe your Saved Collection. Please maintain your session to keep progress.</p>
       </div>

@@ -5,6 +5,7 @@ import FocusArtworkContext from "../../contexts/FocusArtwork"
 import MessageContext from "../../contexts/Message"
 import SearchListContext from "../../contexts/SearchList";
 import NotFoundPage from '../NotFound/NotFoundPage'
+import './Artwork.css'
 
 
 function Artwork(props){
@@ -22,6 +23,7 @@ function Artwork(props){
       setResponseMessage("")
       if(Object.keys(focusArtwork).length>0){
         //flavour text to be added about art being cool
+        setResponseMessage("Nice art!")
       } else if(searchParams.get("museum") && searchParams.get("id")){
         const museum = searchParams.get("museum")
         const id = searchParams.get("id")
@@ -52,6 +54,7 @@ function Artwork(props){
                 tempObj.id = element.id
                 tempObj.info = element.thumbnail.alt_text
                 tempObj.link = element.api_link
+                setResponseMessage("Nice art!")
                 setFocusArtwork(tempObj)
             } else if (museum=='europeana'){
                 const element = response.data.object
@@ -133,15 +136,15 @@ function Artwork(props){
                 if(!tempObj.info){
                     tempObj.info = "No description"
                 }
+                setResponseMessage("Nice art!")
                 setFocusArtwork(tempObj)
             }
-
+            
         })
         .then(()=>{
             setIsLoading(false)
         })
         .catch((err)=>{
-            console.log(err)
             setIsLoading(false)
             setIsError(true)
         })

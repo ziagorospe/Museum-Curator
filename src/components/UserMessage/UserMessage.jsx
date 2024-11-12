@@ -15,7 +15,7 @@ function UserMessage (){
             <div className="box triangle">
                 <p className="user-message">{userMessage}</p>
             </div>
-            <img id="mascot" src={mascot}/>
+            <img id="mascot" src={mascot} alt="The helpful guy"/>
         </div>
 }
 

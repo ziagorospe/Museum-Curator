@@ -78,7 +78,7 @@ function SearchBar(props){
         setIsLoading(false)
         setIsError(false)
         setResponseMessage("hint: try including keywords like 'painting' or 'sculpture'")
-        setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
+        setPreviousSearch({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ})
         response.data.data.forEach((element)=>{
           const tempObj = {}
           tempObj.title = element.title
@@ -107,7 +107,7 @@ function SearchBar(props){
             collectionArray.sort((a,b)=>a.author.localeCompare(b.author))
             break;
         }
-        setSearchParams({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
+        setSearchParams({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ})
         setSearchList(collectionArray)
         setArtworkList(collectionArray)
       }).catch((err)=>{
@@ -173,8 +173,10 @@ function SearchBar(props){
           case 'artist':
             collectionArray.sort((a,b)=>a.author.localeCompare(b.author))
             break;
+          default:
+            setIsError(true)
         }
-        setSearchParams({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
+        setSearchParams({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ})
         setSearchList(collectionArray)
         setArtworkList(collectionArray)
       })
@@ -217,7 +219,7 @@ function SearchBar(props){
         </select>
       </div>
         <div className="search-button-div">
-          <input type="submit" />
+          <input className="btn" type="submit" />
         </div>
       </form>
     </div>
