@@ -1,6 +1,5 @@
 import lostdesert from '../../../public/lost-desert.jpg'
 import { Link } from 'react-router-dom';
-import './NotFoundPage.css'
 
 function NotFoundPage(){
     return (<div className='not-found-page'>

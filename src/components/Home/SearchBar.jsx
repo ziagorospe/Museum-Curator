@@ -30,9 +30,16 @@ function SearchBar(props){
     setIsError(false)
     if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && searchList.length == 0){
       const tempSort = searchParams.get("sort")
+      const tempMuseum = searchParams.get("museum")
       if(tempSort == 'relevance' || tempSort == 'title' || tempSort == 'artist'){
-        queryAdvanced("qexists")
+        if (tempMuseum == 'artic' || tempMuseum == 'europeana'){
+          queryAdvanced("qexists")
         setCurrentMuseum(searchParams.get("museum"))
+        } else {
+          setIsError(true)
+          setResponseMessage("Never heard of that museum, wise guy")
+        }
+        
       } else {
         setIsError(true)
         setResponseMessage("Can't sort by whatever that is in the search bar pal")

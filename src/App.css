@@ -55,7 +55,7 @@ a:hover{
 nav > *{
   display:inline-block;
   margin: 0px 5px 10px 20px;
-  font-size: calc(12px + 1.5vw);
+  font-size: calc(15px + 1.5vw);
 }
 
 .user-message{
@@ -92,19 +92,22 @@ button:active{
       max-width: 40vw;
       align-self:center;
   }
-  p, a{  
+  p{  
+    color: #de8e49;
     font-size: calc(12px + 0.4vw);;
   }
 
   a{
+      font-size: 18px;
       width:auto;
-      color:blue;
-      text-decoration: none;
+      color: #de8e49;
       max-width: 200px;
       align-self: center;
+      margin-bottom: 10px;
   }
 
   a:hover{
+      color: #8c327e;
       text-decoration: underline;
   }
 }
@@ -147,7 +150,7 @@ button:active{
 article{
   display:flex;
   flex-direction: column;
-  max-width:50%;
+  max-width:60%;
   padding:25px;
   margin: 40px auto;
   h2{
@@ -167,7 +170,7 @@ article{
   }
 
   @media screen and (max-width: 900px){
-    max-width: 80%;
+    max-width: 90%;
   }
 }
 
