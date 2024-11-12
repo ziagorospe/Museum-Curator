@@ -3,14 +3,14 @@
 You can find this project hosted on: https://jade-creponne-03046a.netlify.app/
 
 ## Summary:
-This site was designed to simulate the streamlined experience of a digital museum curator for the Everyman. Search, add, remove, inspect, Behold. 
+This site was designed to simulate the streamlined experience of a digital museum curator for the Everyman.<br/><br/> Search, add, remove, inspect, Behold. 
 
 ## Instructions:
 ### WARNING:
  Do Not Refresh the Site under ANY circumstances (unless you want to start all over) as you will lose your current collection.
-<br/><br/>
+<br/>
 
-### There are 5 main actions a user can undertake on this site.
+### There are 5 main actions a user can undertake on this site:
 
 #### 1. Search:
  Begin by filling out the mandatory search terms on the Search Page. Pick from one of the wonderful museums that were gracious enough to provide free web APIs, Enter the keywords or search phrases that you think will have the best chance to find what you're looking for (this is an important step as these free web APIs have a result limitation of 150), choose how to sort your results, and Finally hit the Search! button.
