@@ -11,6 +11,7 @@ article img {
 }
 
 article{
+
     a{
        text-decoration-color: #8c327e; 
        text-decoration: none;
@@ -27,11 +28,11 @@ article{
     }
     h2:hover{
        color:#2f044e;
-    }
-    
+    }    
 
     h3, h4{
         color: #52290c;
+        word-wrap: break-word;
     }
 
     p{
