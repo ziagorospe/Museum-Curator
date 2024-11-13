@@ -8,6 +8,7 @@ import PreviousSearchContext from '../../contexts/PreviousSearch';
 function SearchBar(props){
   const [currentSort, setCurrentSort] = useState('relevance')
   const [searchText, setSearchText] = useState('')
+  const [searchLimit, setSearchLimit] = useState(100)
   const {setResponseMessage} = useContext(MessageContext)
   const {searchList} = useContext(SearchListContext)
   const {setSearchList} = useContext(SearchListContext)
@@ -31,10 +32,21 @@ function SearchBar(props){
     if (searchParams.get("museum") && searchParams.get("searchtext") && searchParams.get("sort") && searchList.length == 0){
       const tempSort = searchParams.get("sort")
       const tempMuseum = searchParams.get("museum")
+      let tempLimit = 100
+      if(searchParams.get("limit")){
+        tempLimit = searchParams.get("limit")
+      }
+      if(tempLimit > 100){
+        tempLimit = 100;
+        setSearchLimit(tempLimit)
+      } else if (tempLimit < 1){
+        tempLimit = 20;
+        setSearchLimit(tempLimit)
+      }
       if(tempSort == 'relevance' || tempSort == 'title' || tempSort == 'artist'){
         if (tempMuseum == 'artic' || tempMuseum == 'europeana'){
+          setCurrentMuseum(searchParams.get("museum"))
           queryAdvanced("qexists")
-        setCurrentMuseum(searchParams.get("museum"))
         } else {
           setIsError(true)
           setResponseMessage("Never heard of that museum, wise guy")
@@ -63,12 +75,17 @@ function SearchBar(props){
     setCurrentMuseum(event.target.value)
   }
 
+  function changeSearchLimit(event){
+    setSearchLimit(event.target.value)
+  }
+
   function queryAdvanced(event){
     setIsLoading(true)
     setResponseMessage("")
     let searchTextQ = "";
     let currentMuseumQ = "";
     let currentSortQ = "";
+    const searchLimitQ = searchLimit
     if(event == "qexists"){
       currentSortQ = searchParams.get("sort")
       currentMuseumQ = searchParams.get("museum")
@@ -91,13 +108,13 @@ function SearchBar(props){
       
       let str = searchTextQ
       searchTextQ = str.replace(/\s+/g, '+')
-      museumQuery = 'https://api.artic.edu/api/v1/artworks/search?q=' + searchTextQ + '&fields=id,title,artist_title,thumbnail,api_link,gallery_title,image_id&limit=100'
+      museumQuery = 'https://api.artic.edu/api/v1/artworks/search?q=' + searchTextQ + '&fields=id,title,artist_title,thumbnail,api_link,gallery_title,image_id&limit=' + searchLimitQ
       axios.get(museumQuery)
       .then((response)=>{
         setIsLoading(false)
         setIsError(false)
         setResponseMessage("hint: try including keywords like 'painting' or 'sculpture'")
-        setPreviousSearch({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ})
+        setPreviousSearch({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ, 'limit': searchLimitQ})
         response.data.data.forEach((element)=>{
           const tempObj = {}
           tempObj.title = element.title
@@ -126,7 +143,7 @@ function SearchBar(props){
             collectionArray.sort((a,b)=>a.author.localeCompare(b.author))
             break;
         }
-        setSearchParams({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ})
+        setSearchParams({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ, 'limit': searchLimitQ})
         setSearchList(collectionArray)
         setArtworkList(collectionArray)
       }).catch((err)=>{
@@ -141,14 +158,14 @@ function SearchBar(props){
     } else if (currentMuseumQ=='europeana'){
       let str = searchTextQ
       searchTextQ = str.replace(/\s+/g, '+')
-      museumQuery = 'https://api.europeana.eu/record/v2/search.json?wskey=steeductona' + '&query=' + searchTextQ + '&type=object&rows=100&media=true'
+      museumQuery = 'https://api.europeana.eu/record/v2/search.json?wskey=steeductona' + '&query=' + searchTextQ + '&type=object&media=true&rows=' + searchLimitQ
 
       axios.get(museumQuery)
       .then((response)=>{
         setIsLoading(false)
         setIsError(false)
         setResponseMessage("hint: try including keywords like 'painting' or 'sculpture'")
-        setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ})
+        setPreviousSearch({'museum': currentMuseum, 'sort': currentSort, 'searchtext': searchTextQ, 'limit': searchLimitQ})
         response.data.items.forEach((element)=>{
           const tempObj = {}
           if(element.dcTitleLangAware.en){
@@ -195,7 +212,7 @@ function SearchBar(props){
           default:
             setIsError(true)
         }
-        setSearchParams({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ})
+        setSearchParams({'museum': currentMuseumQ, 'sort': currentSortQ, 'searchtext': searchTextQ, 'limit': searchLimitQ})
         setSearchList(collectionArray)
         setArtworkList(collectionArray)
       })
@@ -214,7 +231,7 @@ function SearchBar(props){
     <div className="search-bar">
       <form onSubmit={queryAdvanced}>
         <div className="museum-select-div">
-          <label htmlFor="select-museum">Pick a museum:</label>
+          <label htmlFor="select-museum">Pick a Museum:</label>
           <select id="select-museum" value={currentMuseum} onChange={changeMuseum} name="museum">
             <option value="artic">Art Institute of Chicago</option>
             <option value="europeana">Europeana</option>
@@ -231,10 +248,18 @@ function SearchBar(props){
         </div>
       <div className="sort-div">
         <label htmlFor="select-sort">Sort By:</label>
-        <select id="select-sort" value={currentSort} onChange={changeSort} name="Sort Adv">
+        <select id="select-sort" value={currentSort} onChange={changeSort} name="sort-adv">
           <option value={(`relevance`)}>Most Relevant</option>
           <option value={(`title`)}>Title A-Z</option>
           <option value={(`artist`)}>Artist A-Z</option>
+        </select>
+      </div>
+      <div className="limit-div">
+        <label htmlFor="select-limit">Search Limit:</label>
+        <select id="select-limit" value={searchLimit} onChange={changeSearchLimit} name="search-limit">
+          <option value={(20)}>20</option>
+          <option value={(50)}>50</option>
+          <option value={(100)}>100</option>
         </select>
       </div>
         <div className="search-button-div">
